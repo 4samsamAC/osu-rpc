@@ -1,0 +1,11 @@
+# Node.js dependencies
+node_modules
+dist
+gameoverlay
+*.log
+bun.lockb
+package-lock.json
+
+# IntelliJ and VSCode folder config
+.idea
+.vscode

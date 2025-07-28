@@ -1,0 +1,40 @@
+{
+    "name": "osu-rpc",
+    "version": "1.2.0",
+    "description": "Discord Rich Presence for osu!",
+    "main": "index.js",
+    "bin": "index.js",
+    "dependencies": {
+        "@inquirer/prompts": "^7.7.1",
+        "cheerio": "^1.1.2",
+        "ws": "^7.5.10"
+    },
+    "pkg": {
+        "targets": [
+            "node16"
+        ]
+    },
+    "devDependencies": {
+        "pkg": "^5.8.1"
+    },
+    "scripts": {
+        "build": "pkg . --out-path ./dist"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/4samsamAC/osu-rpc.git"
+    },
+    "keywords": [
+        "discord",
+        "osu",
+        "rich-presence",
+        "discord-rpc-client",
+        "gosumemory"
+    ],
+    "author": "KallelGaNewk",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/4samsamAC/osu-rpc/issues"
+    },
+    "homepage": "https://github.com/4samsamAC/osu-rpc#readme"
+}
