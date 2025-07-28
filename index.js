@@ -31,23 +31,23 @@ process.stdout.on('data', (data) => {
     console.log(str);
     let match;
     while ((match = regex.exec(str)) !== null) {
-        console.log(`Dashboard stared : ${match[1]} (IP : ${match[2]}, Port : ${match[3]})`);
+        console.log(`💻 Dashboard stared : ${match[1]} (IP : ${match[2]}, Port : ${match[3]})`);
         startWS(match[2], match[3]);
     }
 });
 
 process.on("exit", (code, signal) => {
     console.error(`[ERREUR] The process is stop (code: ${code}, signal: ${signal}).`);
-    // console.log("[INFO] Restart process...");
+    console.log("[INFO] Restart process...");
     process = spawn(config.path);
 });
 
 process.stderr.on('data', (data) => {
-    console.error(`Error std : ${data}`);
+    console.error(`❌ Error std : ${data}`);
 });
 
 process.on('close', (code) => {
-    console.log(`Processus close error code : ${code}`);
+    console.log(`🛏️ Processus close error code : ${code}`);
 });
 
 async function startWS(ip, port) {
@@ -110,9 +110,27 @@ async function main() {
             /** @type {Activity} */
             let newActivity;
 
+            /**
+             * 0 - Main Menu
+             * 1 - Editing a beatmap
+             * 2 - Playing/Watch Replay
+             * 3 - ?
+             * 4 - Edit Menu
+             * 5 - Browsing
+             * 6 - ?
+             * 7 - Score Screen
+             * 8 - ?
+             * 9 - ?
+             * 10 - ?
+             * 11 - Multyplayer hall
+             * 12 - In Multyplayer lobby
+             * 13 - ?
+             * 14 - In Multyplayer score screen
+             */
+
             if (data.menu.state == 0) {
                 newActivity = new Activity(
-                    `${data.userProfile.name} - Rank ${data.userProfile.rank} - ${data.userProfile.accuracy}% - ${data.userProfile.performancePoints}pp`,
+                    `${data.userProfile.name} ( #${data.userProfile.rank} - ${data.userProfile.accuracy}% - ${data.userProfile.performancePoints}pp )`,
                     `In main menu`,
                     "osu-logo2",
                     "osu!",
@@ -222,6 +240,6 @@ async function whois(username) {
             throw new Error("metaRefresh not found.");
         }
     } catch (error) {
-        console.error(`Error searching for user ${username}: ${error.message}`);
+        console.error(`❌ Error searching for user ${username}: ${error.message}`);
     }
 }

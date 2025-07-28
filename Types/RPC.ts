@@ -23,7 +23,7 @@ export class rpc {
             nonce: "0"
         };
         this.client.on('error', (err) => {
-            console.error('Connexion error to IPC :', err.message);
+            console.error('❌ Connexion error to IPC :', err.message);
         });
     }
 
@@ -84,7 +84,7 @@ export class rpc {
             }
 
         } catch (e) {
-            console.warn("Réponse Discord non analysée :", str);
+            console.warn("⚠️ Discord response not analyse :", str);
         }
     }
 
@@ -92,6 +92,6 @@ export class rpc {
     destroy() {
         clearInterval(this.heartbeatInterval);
         this.client.end();
-        console.log("🔌Disconnected from IPC.");
+        console.log("🔌 Disconnected from IPC.");
     }
 }
