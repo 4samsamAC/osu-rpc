@@ -17,7 +17,7 @@
         "url": "https://github.com/4samsamAC/osu-rpc.git"
     },
     "scripts": {
-        "build": "bun build index.js --target=bun-windows-x64 --compile --outfile=./dist/osu!rpc"
+        "build": "bun build index.js --target=bun-windows-x64 --compile --outfile=./dist/osu-rpc"
     },
     "keywords": [
         "discord",
