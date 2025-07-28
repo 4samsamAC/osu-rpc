@@ -9,20 +9,15 @@
         "cheerio": "^1.1.2",
         "ws": "^7.5.10"
     },
-    "pkg": {
-        "targets": [
-            "node16"
-        ]
-    },
     "devDependencies": {
-        "pkg": "^5.8.1"
-    },
-    "scripts": {
-        "build": "pkg . --out-path ./dist"
+        "@types/bun": "latest"
     },
     "repository": {
         "type": "git",
         "url": "https://github.com/4samsamAC/osu-rpc.git"
+    },
+    "scripts": {
+        "build": "bun build index.js --target=bun-windows-x64 --compile --outfile=./dist/osu!rpc"
     },
     "keywords": [
         "discord",
@@ -36,5 +31,8 @@
     "bugs": {
         "url": "https://github.com/4samsamAC/osu-rpc/issues"
     },
-    "homepage": "https://github.com/4samsamAC/osu-rpc#readme"
+    "homepage": "https://github.com/4samsamAC/osu-rpc#readme",
+    "peerDependencies": {
+        "typescript": "^5.0.0"
+    }
 }

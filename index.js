@@ -12,7 +12,11 @@ const {
     Activity
 } = require('./Types/Activity');
 
-const config = require("./config.json");
+const {
+    readFileSync
+} = require("fs");
+const config = JSON.parse(readFileSync("./config.json", "utf-8"));
+
 
 /** @type {WebSocket} */
 let ws

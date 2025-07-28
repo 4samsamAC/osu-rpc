@@ -2,22 +2,25 @@
 
 ## How to install
 
-1. Install and execute [gosumemory](https://github.com/l3lackShark/gosumemory/releases/latest) <br>
-[Hey, tutorial here](https://github.com/l3lackShark/gosumemory/blob/master/README.md#usage)
+1. Install [tosu](https://github.com/tosuapp/tosu/releases/latest) <br>
 
-2. Once with the [gosumemory](https://github.com/l3lackShark/gosumemory/releases/latest) running, open [osu!](https://osu.ppy.sh)
+2. Go to the [latest release](https://github.com/4samsamAC/osu-rpc/releases/latest), download **osu!rpc.exe** and the **config.json** put them in the same file.
 
-4. Go to the [latest release](https://github.com/KallelGaNewk/osu-rpc/releases/latest), download and execute **osu!rpc.exe**
+3. Once [tosu](https://github.com/tosuapp/tosu/releases/latest) installed, Copy&Past the path to `tosu.exe` in the `path` variable in **config.json**, then open [osu!](https://osu.ppy.sh)
+
+4. Start **osu!rpc.exe**
 
 5. Disable this option in the osu! settings:<br>
 ![image](https://imgur.com/uJADb8F.png)
 
 ## Building
 
+You must have [bun](bun.sh)
+
 ```
-$ git clone https://github.com/KallelGaNewk/osu-rpc
+$ git clone https://github.com/4samsamAC/osu-rpc
 $ cd osu-rpc
-$ npm run build
+$ bun run build
 $ cd dist
 ```
 
@@ -30,3 +33,5 @@ In menu:<br>
 
 In game:<br>
 ![image](https://imgur.com/RCY3Ril.png)
+
+Currently only work for Windows x64
