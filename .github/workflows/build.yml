@@ -1,0 +1,85 @@
+name: Build & Release osu-rpc
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        required: true
+      release:
+        required: true
+      notes:
+        required: true
+      pre:
+        required: false
+        default: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build binary
+        run: |
+          mkdir -p dist
+          bun build index.js --target=bun-windows-x64 --compile --outfile=./dist/osu-rpc
+
+      - name: Copy config.json
+        run: cp config.json dist/
+
+      - name: Build ZIP archive
+        run: |
+          cd dist
+          zip osu-rpc-${{ github.event.inputs.release }}.zip osu-rpc.exe config.json
+          cd ..
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.event.inputs.tag }}
+          release_name: Release ${{ github.event.inputs.release }}
+          body: ${{ github.event.inputs.notes }}
+          draft: false
+          prerelease: ${{ github.event.inputs.pre }}
+
+      - name: Upload release asset (.exe)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/osu-rpc.exe
+          asset_name: osu-rpc.exe
+          asset_content_type: application/octet-stream
+
+      - name: Upload release asset (config.json)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./config.json
+          asset_name: config.json
+          asset_content_type: application/json
+      - name: Upload .zip to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/osu-rpc-${{ github.event.inputs.release }}.zip
+          asset_name: osu-rpc-${{ github.event.inputs.release }}.zip
+          asset_content_type: application/zip
