@@ -7,8 +7,12 @@ export class rpc {
     clientId: string;
     pipe: string;
     client: net.Socket;
-    heartbeatInterval: NodeJS.Timeout;
     activityPayload: ActivityPayload;
+
+    lastSentTime: number = 0;
+
+    heartbeatInterval: NodeJS.Timeout;
+    scheduledUpdate: NodeJS.Timeout | null = null;
     
     constructor(clientId: string) {
         this.clientId = clientId;
@@ -61,7 +65,7 @@ export class rpc {
     }
 
     setActivity(activity: Activity) {
-        console.log("🔄 Setting activity:", activity);
+        console.log("🔄 New activity");
         this.activityPayload = {
             cmd: 'SET_ACTIVITY',
             args: {
@@ -70,7 +74,28 @@ export class rpc {
             },
             nonce: Math.random().toString()
         };
-        this.sendFrame(1, this.activityPayload);
+
+        const now = Date.now();
+        const elapsed = now - this.lastSentTime;
+
+        const delay = 15/5*1000;
+
+        if (elapsed >= delay) {
+            console.log("✅ Immediate update");
+            this.sendFrame(1, this.activityPayload);
+            this.lastSentTime = now;
+        } else {
+            const remaining = delay - elapsed;
+
+            if (this.scheduledUpdate) clearTimeout(this.scheduledUpdate);
+
+            console.log(`⏳ Scheduled update in ${remaining}ms`);
+            this.scheduledUpdate = setTimeout(() => {
+                this.sendFrame(1, this.activityPayload);
+                this.lastSentTime = Date.now();
+                this.scheduledUpdate = null;
+            }, remaining);
+        }
     }
 
     onData(data: Buffer) {

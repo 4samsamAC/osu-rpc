@@ -90,7 +90,6 @@ async function main() {
         console.log("[INFO] Starting main loop...");
 
         const rpc = new discordrpc(config.applicationId);
-        const cooldown = 1000;
         let data;
         start = Date.now();
 
@@ -180,7 +179,7 @@ async function main() {
 
 
         setActivity(); // Set initial activity
-        let interval = setInterval(setActivity, cooldown); // Set activity at regular intervals
+        let interval = setInterval(setActivity); // Set activity at regular intervals
 
         // Handle WebSocket close event
         ws.on("close", () => {
