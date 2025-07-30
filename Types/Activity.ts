@@ -1,3 +1,14 @@
+interface Buttons {
+    buttons: [{
+        label?: String,
+        url?: String
+    },
+    {
+        label?: String,
+        url?: String
+    }]
+}
+
 export interface Activity {
     details?: String,
     state?: String,
@@ -7,34 +18,56 @@ export interface Activity {
         small_image?: String,
         small_text?: String
     },
+    buttons?: Buttons,
     timestamps?: {
-        start?: number
+        start?: Number
     }
 }
 
+export interface ActivityOptions {
+    details?: String;
+    state?: String;
+    largeImageKey?: String;
+    largeImageText?: String;
+    smallImageKey?: String;
+    smallImageText?: String;
+    buttons?: Buttons;
+    start?: Number;
+}
+
 export interface ActivityPayload {
-    cmd: string,
+    cmd: String,
     args: {
-        pid: number,
+        pid: Number,
         activity: Activity
     },
-    nonce?: string
+    nonce?: String
 }
 
 export class Activity implements Activity {
     details?: String;
     state?: String;
     assets?: {
-        large_image?: String,
-        large_text?: String,
-        small_image?: String,
-        small_text?: String
+        large_image?: String;
+        large_text?: String;
+        small_image?: String;
+        small_text?: String;
     };
+    buttons?: Buttons;
     timestamps?: {
-        start?: number
+        start?: Number;
     };
-    
-    constructor(details?: string, state?: string, largeImageKey?: string, largeImageText?: string, smallImageKey?: string, smallImageText?: string, start?: number) {
+
+    constructor({
+        details,
+        state,
+        largeImageKey,
+        largeImageText,
+        smallImageKey,
+        smallImageText,
+        buttons,
+        start
+    }: ActivityOptions) {
         this.details = details;
         this.state = state;
         this.assets = {
@@ -43,8 +76,9 @@ export class Activity implements Activity {
             small_image: smallImageKey,
             small_text: smallImageText
         };
+        this.buttons = buttons;
         this.timestamps = {
-            start: start
+            start
         };
     }
 }

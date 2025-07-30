@@ -128,45 +128,66 @@ async function main() {
              */
 
             if (data.menu.state == 0) {
-                newActivity = new Activity(
-                    `${data.userProfile.name} ( #${data.userProfile.rank} - ${data.userProfile.accuracy}% - ${data.userProfile.performancePoints}pp )`,
-                    `In main menu`,
-                    "osu-logo2",
-                    "osu!",
-                    `https://assets.ppy.sh/beatmaps/${data.menu.bm.set}/covers/list.jpg`,
-                    `Lystening to ${data.menu.bm.metadata.artist} - ${data.menu.bm.metadata.title}`,
-                    start
-                )
+                newActivity = new Activity({
+                    details: `${data.userProfile.name} ( #${data.userProfile.rank} - ${data.userProfile.accuracy}% - ${data.userProfile.performancePoints}pp )`,
+                    state: `In main menu`,
+                    largeImageKey: "osu-logo2",
+                    largeImageText: "osu!",
+                    smallImageKey: `https://assets.ppy.sh/beatmaps/${data.menu.bm.set}/covers/list.jpg`,
+                    smallImageText: `Lystening to ${data.menu.bm.metadata.artist} - ${data.menu.bm.metadata.title}`,
+                    buttons: [{
+                        label: "View Beatmap",
+                        url: `https://osu.ppy.sh/beatmaps/${data.menu.bm.id}`
+                    }, {
+                        label: `View ${data.userProfile.name}'s Profile`,
+                        url: `https://osu.ppy.sh/users/${data.userProfile.id}`
+                    }],
+                    start: start
+                })
             } else if (data.menu.state == 2) {
-                newActivity = new Activity(
-                    `${data.menu.bm.metadata.artist} - ${data.menu.bm.metadata.title}`,
-                    `Mapped by ${data.menu.bm.metadata.mapper}`,
-                    `https://assets.ppy.sh/beatmaps/${data.menu.bm.set}/covers/list.jpg`,
-                    "osu!",
-                    "osu-logo",
-                    "Playing",
-                    start
-                )
+                newActivity = new Activity({
+                    details: `${data.menu.bm.metadata.artist} - ${data.menu.bm.metadata.title}`,
+                    state: `Mapped by ${data.menu.bm.metadata.mapper}`,
+                    largeImageKey: `https://assets.ppy.sh/beatmaps/${data.menu.bm.set}/covers/list.jpg`,
+                    largeImageText: "osu!",
+                    smallImageKey: "osu-logo",
+                    smallImageText: "Playing",
+                    buttons: [{
+                        label: "View Beatmap",
+                        url: `https://osu.ppy.sh/beatmaps/${data.menu.bm.id}`
+                    }, {
+                        label: `View ${data.userProfile.name}'s Profile`,
+                        url: `https://osu.ppy.sh/users/${data.userProfile.id}`
+                    }],
+                    start: start
+                })
             } else if (data.menu.state == 5) {
-                newActivity = new Activity(
-                    `Browsing ${data.menu.bm.metadata.artist} - ${data.menu.bm.metadata.title}`,
-                    `Mapped by ${data.menu.bm.metadata.mapper}`,
-                    `https://assets.ppy.sh/beatmaps/${data.menu.bm.set}/covers/list.jpg`,
-                    `${data.menu.pp[100]}pp - AR ${data.menu.bm.stats.AR} - CS ${data.menu.bm.stats.CS} - OD ${data.menu.bm.stats.OD} - HP ${data.menu.bm.stats.HP}`,
-                    "osu-logo",
-                    "Browsing osu!",
-                    start
-                )
+                newActivity = new Activity({
+                    details: `Browsing ${data.menu.bm.metadata.artist} - ${data.menu.bm.metadata.title}`,
+                    state: `Mapped by ${data.menu.bm.metadata.mapper}`,
+                    largeImageKey: `https://assets.ppy.sh/beatmaps/${data.menu.bm.set}/covers/list.jpg`,
+                    largeImageText: `${data.menu.pp[100]}pp - AR ${data.menu.bm.stats.AR} - CS ${data.menu.bm.stats.CS} - OD ${data.menu.bm.stats.OD} - HP ${data.menu.bm.stats.HP}`,
+                    smallImageKey: "osu-logo",
+                    smallImageText: "Browsing osu!",
+                    buttons: [{
+                        label: "View Beatmap",
+                        url: `https://osu.ppy.sh/beatmaps/${data.menu.bm.id}`
+                    }, {
+                        label: `View ${data.userProfile.name}'s Profile`,
+                        url: `https://osu.ppy.sh/users/${data.userProfile.id}`
+                    }],
+                    start: start
+                })
             } else {
-                newActivity = new Activity(
-                    `Playing osu!`,
-                    `In Menu`,
-                    "logo",
-                    "osu!",
-                    "menu",
-                    "In Menu",
-                    start
-                );
+                newActivity = new Activity({
+                    details: `Playing osu!`,
+                    state: `In Menu`,
+                    largeImageKey: "logo",
+                    largeImageText: "osu!",
+                    smallImageKey: "menu",
+                    smallImageText: "In Menu",
+                    start: start
+                });
             }
 
             const asString = JSON.stringify(newActivity);
